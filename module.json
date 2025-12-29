@@ -2,7 +2,7 @@
   "id": "draw-steel-conduit-prayer",
   "title": "Draw Steel: Conduit Prayer",
   "description": "Adds the prayer mechanism for Conduit heroic resource (Piety) generation at turn start. Includes risk/reward mechanics with divine favor and wrath.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": {
     "minimum": "12",
     "verified": "13"
@@ -17,15 +17,8 @@
     "scripts/conduit-prayer.js"
   ],
   "socket": true,
-  "dependencies": [
-    {
-      "id": "draw-steel",
-      "type": "system",
-      "manifest": "https://github.com/MetaMorphic-Digital/draw-steel/blob/main/system.json"
-    }
-  ],
-  "manifest": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v1.0.0/module.json",
-  "download": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v1.0.0/module.zip",
+  "manifest": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v1.0.1/module.json",
+  "download": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v1.0.1/module.zip",
   "url": "https://github.com/stgreenb/draw-steel-conduit-prayer",
   "license": "MIT",
   "changelog": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases",

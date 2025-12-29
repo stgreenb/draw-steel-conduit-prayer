@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.1] - 2024-12-29
+
+### Fixed
+- Removed unsupported `dependencies` key from module.json to resolve Foundry VTT manifest validation
+
 ## [1.0.0] - 2024-12-29
 
 ### Added
