@@ -16,6 +16,16 @@ Automates the Conduit's prayer mechanic for Draw Steel.
 - Foundry VTT v13+
 - Draw Steel System
 
+## Installation
+
+1. In Foundry VTT, go to **Game Settings** → **Manage Modules**
+2. Click **Add Module** → **Install Module**
+3. Enter the Manifest URL:
+   ```
+   https://github.com/stgreenb/draw-steel-conduit-prayer/releases/latest/download/module.json
+   ```
+4. Click **Install** and enable the module
+
 ## Usage
 
 1. Start combat with a Conduit character
