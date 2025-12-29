@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Get version
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Create module.json with version
+        run: |
+          jq '.version = "${{ steps.version.outputs.VERSION }}"' module.json > module.json.tmp
+          mv module.json.tmp module.json
+
+      - name: Create zip file
+        run: |
+          zip -r module.zip . -x ".git/*" ".github/*"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            module.zip
+            module.json
+          body: |
+            ## Release ${{ steps.version.outputs.VERSION }}
+
+            ### Installation
+            1. Download `module.zip` from this release
+            2. Extract to your Foundry VTT `Data/modules/` directory
+            3. Enable the module in Foundry VTT Settings → Manage Modules
+
+            ### Changes
+            See [CHANGELOG.md](https://github.com/stgreenb/draw-steel-conduit-prayer/blob/main/module/CHANGELOG.md) for detailed changes.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
