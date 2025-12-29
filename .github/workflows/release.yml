@@ -44,9 +44,10 @@ jobs:
             ## Release ${{ steps.version.outputs.VERSION }}
 
             ### Installation
-            1. Download `module.zip` from this release
-            2. Extract to your Foundry VTT `Data/modules/` directory
-            3. Enable the module in Foundry VTT Settings → Manage Modules
+            In Foundry VTT, go to **Game Settings** → **Manage Modules** → **Install Module** and enter:
+            ```
+            https://github.com/stgreenb/draw-steel-conduit-prayer/releases/latest/download/module.json
+            ```
 
             ### Changes
             See [CHANGELOG.md](https://github.com/stgreenb/draw-steel-conduit-prayer/blob/main/module/CHANGELOG.md) for detailed changes.
