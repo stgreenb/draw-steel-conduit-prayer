@@ -6,9 +6,7 @@
  * 1. Turn starts -> HeroModel._onStartTurn suppresses normal piety gain
  * 2. Dialog appears: "Will you PRAY before rolling?" (only on owning client)
  * 3. Player chooses PRAY or SKIP (before any rolling happens)
- * 4. Roll appropriate amounts based on decision:
- *    - SKIP: Roll 1d3 for baseline piety only
- *    - PRAY: Roll 1d3 baseline + 1d3 prayer effects
+ * 4. Roll single 1d3 - result determines both baseline and prayer effects
  * 5. Apply total piety gain using Draw Steel's /gain enricher system
  */
 
@@ -69,76 +67,49 @@ async function handlePrayerFullFlow(actor) {
   try {
     const level = getConduitLevel(actor);
 
-    // Roll 1d3 for baseline piety with dice visualization
-    const baselineRoll = new Roll("1d3");
-    await baselineRoll.evaluate();
-    await baselineRoll.toMessage({
-      flavor: `${actor.name} - Baseline Piety Roll`,
+    // Roll exactly once - use this result for all calculations
+    const roll = new Roll("1d3");
+    await roll.evaluate();
+    await roll.toMessage({
+      flavor: `${actor.name} - Prayer Roll`,
       speaker: ChatMessage.getSpeaker({ actor })
     });
 
-    // Roll 1d3 for prayer effects with dice visualization
-    const prayerRoll = new Roll("1d3");
-    await prayerRoll.evaluate();
-    await prayerRoll.toMessage({
-      flavor: `${actor.name} - Prayer Effects Roll`,
-      speaker: ChatMessage.getSpeaker({ actor })
-    });
+    const result = roll.total;
 
-    // Get results after dice are shown
-    const baseline = baselineRoll.total;
-    const prayerResult = prayerRoll.total;
+    // Calculate based on single result
+    let pietyGain = result;
+    let additionalPiety = 0;
+    let effect = '';
+    let damageFormula = '';
 
-    // Calculate total piety gain
-    let totalGain = baseline;
-    let htmlContent = "";
-
-    if (prayerResult === 1) {
-      // Prayer result 1: +1 piety + psychic damage
-      totalGain = baseline + 1;
-
-      htmlContent = `<div class="dice-roll ds-conduit-prayer">
-        <div class="header" style="color: var(--draw-steel-c-failure);">THE GODS ARE ANGERED!</div>
-        <div class="prayer-details">
-          <p><strong>Baseline Roll:</strong> ${baseline}</p>
-          <p><strong>Prayer Roll:</strong> 1</p>
-          <p><strong>Total Piety Gain:</strong> +${totalGain}</p>
-          <p><strong>Psychic Damage:</strong> [[/damage 1d6+${level} psychic]] (unblockable)</p>
-        </div>
-      </div>`;
-
-    } else if (prayerResult === 2) {
-      // Prayer result 2: +1 piety (safe)
-      totalGain = baseline + 1;
-
-      htmlContent = `<div class="dice-roll ds-conduit-prayer">
-        <div class="header" style="color: var(--draw-steel-c-tan);">DIVINE GRACE</div>
-        <div class="prayer-details">
-          <p><strong>Baseline Roll:</strong> ${baseline}</p>
-          <p><strong>Prayer Roll:</strong> 2</p>
-          <p><strong>Total Piety Gain:</strong> +${totalGain}</p>
-        </div>
-      </div>`;
-
-    } else if (prayerResult === 3) {
-      // Prayer result 3: +2 piety + domain effect
-      totalGain = baseline + 2;
-
-      htmlContent = `<div class="dice-roll ds-conduit-prayer">
-        <div class="header" style="color: var(--draw-steel-c-success);">DIVINE FAVOR!</div>
-        <div class="prayer-details">
-          <p><strong>Baseline Roll:</strong> ${baseline}</p>
-          <p><strong>Prayer Roll:</strong> 3</p>
-          <p><strong>Total Piety Gain:</strong> +${totalGain}</p>
-          <p><strong>Domain Effect:</strong> Choose one to activate!</p>
-        </div>
-      </div>`;
+    if (result === 1) {
+      additionalPiety = 1;
+      damageFormula = `1d6+${level}`;
+      effect = 'THE GODS ARE ANGERED!';
+    } else if (result === 2) {
+      additionalPiety = 1;
+      effect = 'DIVINE GRACE';
+    } else if (result === 3) {
+      additionalPiety = 2;
+      effect = 'DIVINE FAVOR!';
     }
+    pietyGain = result + additionalPiety;
 
-    // Apply total piety gain using enricher
+    let htmlContent = `<div class="dice-roll ds-conduit-prayer">
+      <div class="header" style="color: var(--draw-steel-c-failure);">${effect}</div>
+      <div class="prayer-details">
+        <p><strong>Roll:</strong> ${result}</p>
+        <p><strong>Additional Piety:</strong> +${additionalPiety}</p>
+        <p><strong>Total Piety Gain:</strong> +${pietyGain}</p>
+        ${damageFormula ? `<p><strong>Psychic Damage:</strong> [[/damage ${damageFormula} psychic]] (unblockable)</p>` : ''}
+        ${result === 3 ? `<p><strong>Domain Effect:</strong> Choose one to activate!</p>` : ''}
+      </div>
+    </div>`;
+
     await ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor }),
-      content: `${htmlContent}\n[[/gain ${totalGain} heroic]]`
+      content: `${htmlContent}\n[[/gain ${pietyGain} heroic]]`
     });
 
   } catch (error) {
@@ -148,24 +119,24 @@ async function handlePrayerFullFlow(actor) {
 
 async function handleSkipFlow(actor) {
   try {
-    // Roll 1d3 for baseline piety only with dice visualization
-    const baselineRoll = new Roll("1d3");
-    await baselineRoll.evaluate();
-    await baselineRoll.toMessage({
+    const roll = new Roll("1d3");
+    await roll.evaluate();
+    await roll.toMessage({
       flavor: `${actor.name} - Piety Gain (No Prayer)`,
       speaker: ChatMessage.getSpeaker({ actor })
     });
 
-    const baseline = baselineRoll.total;
+    const result = roll.total;
 
     await ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor }),
       content: `<div class="dice-roll ds-conduit-prayer">
         <div class="header" style="color: var(--draw-steel-c-tan);">Prayer Declined</div>
         <div class="prayer-details">
-          <p><strong>${actor.name}</strong> declines to pray and gains <strong>${baseline} Piety</strong>.</p>
+          <p><strong>Roll:</strong> ${result}</p>
+          <p><strong>${actor.name}</strong> gains <strong>${result} Piety</strong>.</p>
         </div>
-      </div>\n[[/gain ${baseline} heroic]]`
+      </div>\n[[/gain ${result} heroic]]`
     });
 
   } catch (error) {
@@ -220,15 +191,15 @@ async function promptConduitPrayer(actor) {
         <p>Will you <strong>PRAY</strong> to the gods before rolling for piety?</p>
 
         <div class="card">
-          <h4>If You Pray (d3 roll determines prayer effects):</h4>
+          <h4>If You Pray (single d3 roll determines effects):</h4>
           <ul>
-            <li><strong class="danger">Roll 1:</strong> +1 additional piety + 1d6+${level} psychic damage (unblockable)</li>
-            <li><strong class="primary">Roll 2:</strong> +1 additional piety (safe)</li>
-            <li><strong class="success">Roll 3:</strong> +2 additional piety + activate one domain effect</li>
+            <li><strong class="danger">Roll 1:</strong> +2 total piety (1+1) + 1d6+${level} psychic damage (unblockable)</li>
+            <li><strong class="primary">Roll 2:</strong> +3 total piety (2+1) (safe)</li>
+            <li><strong class="success">Roll 3:</strong> +5 total piety (3+2) + activate one domain effect</li>
           </ul>
         </div>
 
-        <p><em>You'll roll 1d3 for baseline piety either way. Prayer adds to that result.</em></p>
+        <p><em>You'll roll 1d3 for piety. If you pray, the result determines additional effects.</em></p>
       </div>
     `;
 
