@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0] - 2025-01-15
+
+### Fixed
+- **Piety Suppression**: Fixed critical bug where automatic Draw Steel piety gain was not being suppressed, causing double piety
+- Added `preUpdateCombatant` hook to set flag BEFORE `_onStartTurn` executes
+- Added `preUpdateActor` hook to block automatic piety updates when prayer is active
+- Added `renderChatMessageHTML` hook to hide automatic piety chat messages
+- Proper single-roll implementation matching official Draw Steel rules
+
+### Changed
+- Simplified module code with consolidated handlers
+- Removed verbose debug logging for cleaner production output
+- Streamlined CSS and dialog text
+
 ## [1.1.0] - 2024-12-29
 
 ### Changed

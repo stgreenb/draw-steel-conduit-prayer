@@ -25,14 +25,11 @@ jobs:
         id: version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
-      - name: Create module.json with version
-        run: |
-          jq '.version = "${{ steps.version.outputs.VERSION }}"' module.json > module.json.tmp
-          mv module.json.tmp module.json
+      - name: Update version in module.json
+        run: jq ".version = \"${{ steps.version.outputs.VERSION }}\"" module.json > module.json.tmp && mv module.json.tmp module.json
 
       - name: Create zip file
-        run: |
-          zip -r module.zip . -x ".git/*" ".github/*"
+        run: zip -r module.zip . -x ".git/*" ".github/*"
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -50,6 +47,6 @@ jobs:
             ```
 
             ### Changes
-            See [CHANGELOG.md](https://github.com/stgreenb/draw-steel-conduit-prayer/blob/main/module/CHANGELOG.md) for detailed changes.
+            See [CHANGELOG.md](https://github.com/stgreenb/draw-steel-conduit-prayer/blob/main/CHANGELOG.md) for detailed changes.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

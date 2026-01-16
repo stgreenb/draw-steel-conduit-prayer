@@ -1,8 +1,8 @@
 {
   "id": "draw-steel-conduit-prayer",
   "title": "Draw Steel: Conduit Prayer",
-  "description": "A clean, refactored implementation that properly integrates with Draw Steel's resource system for Conduit prayer mechanics.",
-  "version": "1.1.0",
+  "description": "Conduit class prayer mechanics with single-roll system and proper piety gain suppression.",
+  "version": "1.2.0",
   "compatibility": {
     "minimum": "12",
     "verified": "13"
@@ -17,8 +17,8 @@
     "scripts/conduit-prayer.js"
   ],
   "socket": true,
-  "manifest": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v1.1.0/module.json",
-  "download": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v1.1.0/module.zip",
+  "manifest": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v1.2.0/module.json",
+  "download": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v1.2.0/module.zip",
   "url": "https://github.com/stgreenb/draw-steel-conduit-prayer",
   "license": "MIT",
   "changelog": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases",
