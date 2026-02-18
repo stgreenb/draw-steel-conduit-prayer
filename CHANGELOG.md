@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.0.0-alpha.1] - 2026-02-15 [PRE-RELEASE]
+## [2.0.0] - 2026-02-18
 
 ### ⚠️ Breaking Changes
 - Requires Draw Steel 0.10.0+ (not compatible with 0.9.x)
@@ -16,9 +16,6 @@
 - Message suppression now checks both `data.flavor` and `data.system.parts` for resource gain detection
 - libWrapper uses MIXED mode to allow other modules to also wrap `_onStartTurn`
 - Added null check for `owningUser` in turn start handler
-
-### Note
-This is a pre-release for testing with Draw Steel 0.10.0. Do not use with Draw Steel 0.9.x.
 
 ## [1.2.0] - 2026-01-15
 

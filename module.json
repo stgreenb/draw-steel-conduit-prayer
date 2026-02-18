@@ -1,11 +1,30 @@
 {
   "id": "draw-steel-conduit-prayer",
   "title": "Draw Steel: Conduit Prayer",
-  "description": "A clean, refactored implementation that properly integrates with Draw Steel's resource system for Conduit prayer mechanics.",
-  "version": "1.1.0",
+  "description": "Conduit class prayer mechanics with piety gain suppression. After choosing to pray, click the Gain Resource button to receive your piety.",
+  "version": "2.0.0",
   "compatibility": {
     "minimum": "12",
     "verified": "13"
+  },
+  "relationships": {
+    "requires": [
+      {
+        "id": "lib-wrapper",
+        "type": "module",
+        "manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json"
+      }
+    ],
+    "systems": [
+      {
+        "id": "draw-steel",
+        "type": "system",
+        "manifest": "https://github.com/MetaMorphic-Digital/draw-steel/releases/download/release-0.10.0/system.json",
+        "compatibility": {
+          "minimum": "0.10.0"
+        }
+      }
+    ]
   },
   "authors": [
     {
@@ -17,8 +36,8 @@
     "scripts/conduit-prayer.js"
   ],
   "socket": true,
-  "manifest": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v1.1.0/module.json",
-  "download": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v1.1.0/module.zip",
+  "manifest": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v2.0.0/module.json",
+  "download": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v2.0.0/module.zip",
   "url": "https://github.com/stgreenb/draw-steel-conduit-prayer",
   "license": "MIT",
   "changelog": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases",
