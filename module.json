@@ -1,8 +1,8 @@
 {
   "id": "draw-steel-conduit-prayer",
   "title": "Draw Steel: Conduit Prayer",
-  "description": "Conduit class prayer mechanics with single-roll system and proper piety gain suppression.",
-  "version": "2.0.0-alpha.1",
+  "description": "Conduit class prayer mechanics with piety gain suppression. After choosing to pray, click the Gain Resource button to receive your piety.",
+  "version": "2.0.0",
   "compatibility": {
     "minimum": "12",
     "verified": "13"
@@ -36,8 +36,8 @@
     "scripts/conduit-prayer.js"
   ],
   "socket": true,
-  "manifest": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v2.0.0-alpha.1/module.json",
-  "download": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v2.0.0-alpha.1/module.zip",
+  "manifest": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v2.0.0/module.json",
+  "download": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v2.0.0/module.zip",
   "url": "https://github.com/stgreenb/draw-steel-conduit-prayer",
   "license": "MIT",
   "changelog": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases",
