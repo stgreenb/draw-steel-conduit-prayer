@@ -2,7 +2,7 @@
   "id": "draw-steel-conduit-prayer",
   "title": "Draw Steel: Conduit Prayer",
   "description": "Conduit class prayer mechanics with piety gain suppression. After choosing to pray, click the Gain Resource button to receive your piety.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "compatibility": {
     "minimum": "12",
     "verified": "13"

@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.0.1] - 2026-03-04
+
+### Fixed
+- **Chat Message Error**: Fixed "parts.some is not a function" error in preCreateChatMessage hook by adding proper array type checking
+
 ## [2.0.0] - 2026-02-18
 
 ### ⚠️ Breaking Changes

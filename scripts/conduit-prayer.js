@@ -71,7 +71,7 @@ Hooks.on('preCreateChatMessage', (message, data, options, user) => {
   const flavor = data.flavor;
   const parts = data.system?.parts ?? [];
   const isResourceGain = flavor === CONDUIT_PRAYER.HEROIC_RESOURCE_FLAVOR ||
-    parts.some(p => p.flavor === CONDUIT_PRAYER.HEROIC_RESOURCE_FLAVOR);
+    (Array.isArray(parts) && parts.some(p => p.flavor === CONDUIT_PRAYER.HEROIC_RESOURCE_FLAVOR));
   
   if (!isResourceGain) return true;
 
