@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.2] - 2026-03-14
+
+### Added
+- **GM/Director Notification**: Prayer prompt now appears for GM/Director when no player controls the conduit actor
+- **Active User Check**: Module now checks if user is actively logged in before prompting
+
+### Changed
+- **Draw Steel Compatibility**: Updated minimum requirement to Draw Steel 0.11.0
+
+### Fixed
+- **Inactive Owner**: Fixed issue where logged-out players were still considered owners, preventing GM from receiving prayer prompt
+
 ## [2.0.1] - 2026-03-04
 
 ### Fixed

@@ -197,8 +197,13 @@ Hooks.once("ready", () => {
     async function(wrapped, combatant) {
       const actor = this.parent;
       if (actor && isConduit(actor) && this.class?.system?.turnGain) {
-        const owningUser = game.users.contents.find(u => !u.isGM && u.character?.id === actor.id);
-        if (owningUser) await sendPrayerPrompt(actor, owningUser);
+        const owningUser = game.users.contents.find(u => !u.isGM && u.active && u.character?.id === actor.id);
+        if (owningUser) {
+          await sendPrayerPrompt(actor, owningUser);
+        } else {
+          const gmUser = game.users.contents.find(u => u.isGM && u.active);
+          if (gmUser) await promptConduitPrayer(actor);
+        }
         return;
       }
       return wrapped(combatant);
