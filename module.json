@@ -36,8 +36,8 @@
     "scripts/conduit-prayer.js"
   ],
   "socket": true,
-  "manifest": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v2.0.0/module.json",
-  "download": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v2.0.0/module.zip",
+  "manifest": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v2.0.2/module.json",
+  "download": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases/download/v2.0.2/module.zip",
   "url": "https://github.com/stgreenb/draw-steel-conduit-prayer",
   "license": "MIT",
   "changelog": "https://github.com/stgreenb/draw-steel-conduit-prayer/releases",
