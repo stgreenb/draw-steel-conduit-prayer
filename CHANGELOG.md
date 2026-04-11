@@ -1,6 +1,33 @@
 # Changelog
 
+## [3.0.0] - 2026-04-12
+
+### ⚠️ BREAKING CHANGES
+- **Foundry Version**: Now requires Foundry VTT v14.360+ (incompatible with v12-v13)
+- **Draw Steel System**: Now requires Draw Steel system v1.0.0+ (incompatible with 0.x versions)
+- **Chat Message Parts**: Complete rewrite of message suppression logic for Draw Steel 1.0's new parts system
+
+### Changed
+- **Chat Parts Detection**: Now scans ALL message parts array, not just first element
+- **Dual Format Support**: Correctly handles both legacy `data.flavor` and new `system.parts` formats
+- **Duplicate Prevention**: Ensures no duplicate piety gain when both formats present
+- **Application V2**: Verified compatibility with Foundry v14's pop-out/detached window dialogs
+
+### Fixed
+- **Empty Parts Handling**: Gracefully handles empty or undefined `system.parts` arrays
+- **Multiple Parts**: Correctly detects resource gain when other parts coexist in message
+
 ## [2.0.2] - 2026-03-14
+
+### Added
+- **GM/Director Notification**: Prayer prompt now appears for GM/Director when no player controls the conduit actor
+- **Active User Check**: Module now checks if user is actively logged in before prompting
+
+### Changed
+- **Draw Steel Compatibility**: Updated minimum requirement to Draw Steel 0.11.0
+
+### Fixed
+- **Inactive Owner**: Fixed issue where logged-out players were still considered owners, preventing GM from receiving prayer prompt
 
 ### Added
 - **GM/Director Notification**: Prayer prompt now appears for GM/Director when no player controls the conduit actor

@@ -68,11 +68,35 @@ Hooks.on('preUpdateActor', (actor, updateData) => {
 });
 
 Hooks.on('preCreateChatMessage', (message, data, options, user) => {
+  // Check for resource gain via legacy flavor (v12-v13 compatibility) or chat parts (v14+)
   const flavor = data.flavor;
-  const parts = data.system?.parts ?? [];
-  const isResourceGain = flavor === CONDUIT_PRAYER.HEROIC_RESOURCE_FLAVOR ||
-    (Array.isArray(parts) && parts.some(p => p.flavor === CONDUIT_PRAYER.HEROIC_RESOURCE_FLAVOR));
+  const parts = data.system?.parts;
   
+  // Determine if this is a resource gain message
+  let isResourceGain = false;
+  
+  // Check legacy flavor path first
+  if (flavor === CONDUIT_PRAYER.HEROIC_RESOURCE_FLAVOR) {
+    isResourceGain = true;
+  }
+  
+  // Check chat parts system (v14+) - scan ALL parts, not just first
+  // This handles the new DSRoll.toMessage() structure with system.parts
+  if (Array.isArray(parts) && parts.length > 0) {
+    // Iterate through ALL parts looking for resource gain flavor
+    for (const part of parts) {
+      if (part && part.flavor === CONDUIT_PRAYER.HEROIC_RESOURCE_FLAVOR) {
+        isResourceGain = true;
+        break;
+      }
+    }
+  }
+  
+  // Graceful fallback: if no parts array or empty, rely on legacy detection
+  if (!isResourceGain && ((!Array.isArray(parts) || parts.length === 0) && flavor === CONDUIT_PRAYER.HEROIC_RESOURCE_FLAVOR)) {
+    isResourceGain = true;
+  }
+
   if (!isResourceGain) return true;
 
   const actor = ChatMessage.getSpeakerActor(data.speaker);
